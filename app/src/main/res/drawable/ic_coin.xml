@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Đồng tiền vàng lỗ vuông trên nền sơn mài; vùng an toàn 66dp ở giữa khung 108dp -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#A8741F"
+        android:pathData="M54,22a32,32 0,1 1,0 64a32,32 0,1 1,0 -64z" />
+    <path android:fillColor="#E0AB45"
+        android:pathData="M54,24.5a29.5,29.5 0,1 1,0 59a29.5,29.5 0,1 1,0 -59z" />
+    <path android:fillColor="#00000000" android:strokeColor="#A8741F" android:strokeWidth="1.6"
+        android:pathData="M54,30a24,24 0,1 1,0 48a24,24 0,1 1,0 -48z" />
+    <path android:fillColor="#F7D58A"
+        android:pathData="M40,34a20,20 0,0 1,14,-5a20,20 0,0 0,-17,10z" />
+    <path android:fillColor="#3B0A0D"
+        android:pathData="M45,45h18v18h-18z" />
+    <path android:fillColor="#A8741F"
+        android:pathData="M42,42h24v3h-24zM42,63h24v3h-24zM42,45h3v18h-3zM63,45h3v18h-3z" />
+</vector>

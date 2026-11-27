@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6e1016">
+<title>Quẻ hôm nay</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Noto+Serif+Display:wght@700;800&display=swap&subset=vietnamese" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--lac:#6e1016;--deep:#3d070a;--mid:#5a0c11;--gold:#e0ab45;--cream:#fbefe6;--soft:#e9bfb2;--edge:#a5464b}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;min-height:100%;background:var(--lac)}
+body{color:var(--cream);font:16px/1.5 "Be Vietnam Pro",system-ui,sans-serif;background:radial-gradient(120% 70% at 50% -10%,#a8262d 0,var(--lac) 55%,#4a0a0e 100%) fixed;overflow-x:clip;
+  padding:max(18px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+.app{max-width:460px;margin:0 auto;display:grid;gap:18px}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px}
+header h1{font:800 22px/1.1 "Noto Serif Display",Georgia,serif;margin:0}
+header p{margin:2px 0 0;color:var(--soft);font-size:14px}
+.gear{min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--edge);background:var(--mid);color:var(--cream);font-size:20px;cursor:pointer}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.stage{display:grid;place-items:center;min-height:300px}
+.tap{width:min(72vw,260px);aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;color:#3b0a0d;
+  background:radial-gradient(circle at 35% 30%,#f7d58a 0,var(--gold) 38%,#a8741f 100%);
+  box-shadow:0 0 0 10px #ffffff10,0 0 0 22px #00000018,0 18px 40px #0007,inset 0 -8px 18px #7a4e0f88,inset 0 6px 10px #fff6;
+  display:grid;place-content:center;gap:4px;font:800 26px/1.1 "Noto Serif Display",serif}
+.tap small{font:500 14px "Be Vietnam Pro",sans-serif}
+.tap.shake{animation:sh .9s ease-in-out}
+@keyframes sh{0%,100%{transform:rotate(0)}15%{transform:rotate(-9deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-7deg)}60%{transform:rotate(6deg)}75%{transform:rotate(-3deg)}}
+.res{display:none;gap:14px}.res.on{display:grid}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:linear-gradient(160deg,var(--deep),var(--mid));border:1px solid var(--edge);border-radius:20px;padding:14px 14px 16px;text-align:center;box-shadow:inset 0 1px 0 #ffffff22,0 10px 24px #0005}
+.tile small{color:var(--soft);font-size:14px}
+.num{font:800 clamp(72px,24vw,108px)/1 "Noto Serif Display",serif;color:var(--gold);text-shadow:0 2px 0 #2a0507;font-variant-numeric:tabular-nums}
+.tile p{margin:6px 0 0;font-size:13px;color:var(--soft)}
+.card{background:#00000028;border:1px solid var(--edge);border-radius:18px;padding:16px}
+.sc{display:flex;align-items:baseline;gap:8px}.sc b{font:800 40px/1 "Noto Serif Display",serif}
+.meter{height:10px;border-radius:6px;background:var(--deep);overflow:hidden;margin:10px 0}.meter i{display:block;height:100%;width:0;background:var(--gold);transition:width .7s}
+.rel{font-weight:700;color:var(--gold)}.card p{margin:6px 0 0;font-size:15px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;text-align:center}
+.d{border-radius:12px;padding:8px 2px;background:#00000022;font-size:13px;color:var(--soft)}
+.d b{display:block;font-size:15px;color:var(--cream);font-variant-numeric:tabular-nums}
+.d.t{background:var(--gold);color:#3b0a0d}.d.t b{color:#3b0a0d}
+.dot{display:block;height:4px;border-radius:2px;margin:6px auto 0;background:var(--gold)}
+.row{display:flex;gap:10px}.row button{flex:1}
+.btn{min-height:48px;border-radius:14px;border:1px solid var(--edge);background:var(--mid);color:var(--cream);font:700 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
+.sheet{display:none}.sheet.on{display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:14px;color:var(--soft)}
+input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--edge);background:var(--deep);color:#fff}
+.chk{display:flex;gap:10px;align-items:center;min-height:44px;font-size:15px;color:var(--cream)}.chk input{width:22px;height:22px;accent-color:var(--gold)}
+.fine{font-size:13px;color:var(--soft);text-align:center;margin:0}
+@media(prefers-reduced-motion:reduce){.tap.shake{animation:none}.meter i{transition:none}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div><h1>Quẻ hôm nay</h1><p id="date"></p></div>
+    <button class="gear" id="gear" aria-label="Đổi ngày sinh">⚙</button>
+  </header>
+
+  <section class="sheet card" id="sheet">
+    <label>Ngày sinh dương lịch<input type="date" id="dob"></label>
+    <div class="chk" id="tetWrap"><input type="checkbox" id="tet"><span>Sinh trước Tết Nguyên Đán năm đó</span></div>
+    <button class="btn" id="save" style="background:var(--gold);color:#3b0a0d;border:0">Lưu</button>
+  </section>
+
+  <section class="stage" id="stage">
+    <button class="tap" id="tap">Gieo quẻ<small id="tapsub">Chạm để xóc ống quẻ</small></button>
+  </section>
+
+  <section class="res" id="res">
+    <div class="tiles">
+      <div class="tile"><small>Số mệnh</small><div class="num" id="n1">--</div><p id="m1"></p></div>
+      <div class="tile"><small>Số ngày</small><div class="num" id="n2">--</div><p id="m2"></p></div>
+    </div>
+    <div class="card">
+      <div class="sc"><b id="sc">–</b><span style="color:var(--soft)">/10 điểm ngày</span></div>
+      <div class="meter"><i id="bar"></i></div>
+      <div class="rel" id="rel"></div>
+      <p id="relp"></p>
+      <p id="tip" style="color:var(--soft)"></p>
+    </div>
+    <div class="week" id="week" aria-label="Quẻ 7 ngày"></div>
+    <div class="row"><button class="btn" id="copy">Sao chép quẻ</button><button class="btn" id="again">Xem lại nghi thức</button></div>
+  </section>
+
+  <p class="fine" id="prof"></p>
+  <p class="fine">Mỗi ngày một quẻ, gieo lại vẫn ra cùng số. Chỉ để tham khảo, giải trí.</p>
+</main>
+<script>
+{
+const $=id=>document.getElementById(id);
+const CAN=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CHI=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const NAP=[['Hải Trung Kim','Kim'],['Lư Trung Hỏa','Hỏa'],['Đại Lâm Mộc','Mộc'],['Lộ Bàng Thổ','Thổ'],['Kiếm Phong Kim','Kim'],['Sơn Đầu Hỏa','Hỏa'],['Giản Hạ Thủy','Thủy'],['Thành Đầu Thổ','Thổ'],['Bạch Lạp Kim','Kim'],['Dương Liễu Mộc','Mộc'],['Tuyền Trung Thủy','Thủy'],['Ốc Thượng Thổ','Thổ'],['Tích Lịch Hỏa','Hỏa'],['Tùng Bách Mộc','Mộc'],['Trường Lưu Thủy','Thủy'],['Sa Trung Kim','Kim'],['Sơn Hạ Hỏa','Hỏa'],['Bình Địa Mộc','Mộc'],['Bích Thượng Thổ','Thổ'],['Kim Bạch Kim','Kim'],['Phú Đăng Hỏa','Hỏa'],['Thiên Hà Thủy','Thủy'],['Đại Trạch Thổ','Thổ'],['Thoa Xuyến Kim','Kim'],['Tang Đố Mộc','Mộc'],['Đại Khê Thủy','Thủy'],['Sa Trung Thổ','Thổ'],['Thiên Thượng Hỏa','Hỏa'],['Thạch Lựu Mộc','Mộc'],['Đại Hải Thủy','Thủy']];
+const EL={'Kim':{d:[4,9],c:'trắng, xám, ánh kim',h:'Tây'},'Thủy':{d:[1,6],c:'đen, xanh dương',h:'Bắc'},'Mộc':{d:[3,8],c:'xanh lá',h:'Đông'},'Hỏa':{d:[2,7],c:'đỏ, hồng, tím',h:'Nam'},'Thổ':{d:[5,0],c:'vàng, nâu đất',h:'Trung cung (gần nhà, chính giữa)'}};
+const GEN={'Kim':'Thổ','Thủy':'Kim','Mộc':'Thủy','Hỏa':'Mộc','Thổ':'Hỏa'};
+const CHILD={'Kim':'Thủy','Thủy':'Mộc','Mộc':'Hỏa','Hỏa':'Thổ','Thổ':'Kim'};
+const BEAT={'Kim':'Mộc','Mộc':'Thổ','Thổ':'Thủy','Thủy':'Hỏa','Hỏa':'Kim'};
+const BEATBY={'Kim':'Hỏa','Mộc':'Kim','Thổ':'Mộc','Thủy':'Thổ','Hỏa':'Thủy'};
+const DEL={1:'Thủy',6:'Thủy',2:'Hỏa',7:'Hỏa',3:'Mộc',8:'Mộc',4:'Kim',9:'Kim',5:'Thổ',0:'Thổ'};
+const MEAN=['viên mãn, khởi nguồn','khởi đầu, chủ động','hòa hợp, kết nối','sáng tạo, giao tiếp','nền tảng, kỷ luật','tự do, đổi mới','yêu thương, trách nhiệm','trực giác, chiêm nghiệm','tài lộc, quyền lực','bao dung, hoàn thành'];
+const REL={
+  sinhNhap:{s:9,t:'Đại cát – ngày sinh nhập',p:'Năng lượng ngày nuôi dưỡng mệnh bạn. Hợp khởi sự, gặp gỡ, quyết việc lớn.'},
+  tyHoa:{s:8,t:'Cát – ngày tỷ hòa',p:'Ngày cùng hành với mệnh, thuận để củng cố, hợp tác với người cùng chí hướng.'},
+  sinhXuat:{s:6,t:'Bình – ngày sinh xuất',p:'Mệnh bạn cho đi năng lượng. Hợp giúp người, dạy, chia sẻ; tránh làm quá sức.'},
+  khacXuat:{s:5,t:'Bình – ngày khắc xuất',p:'Bạn nắm thế chủ động nhưng dễ va chạm. Làm việc chắc tay, nói năng mềm mỏng.'},
+  khacNhap:{s:3,t:'Cần thận trọng – ngày khắc nhập',p:'Năng lượng ngày khắc mệnh. Nên giữ nhịp chậm, kiểm tra kỹ trước khi quyết.'}};
+const sumD=n=>String(n).split('').reduce((a,b)=>a+(+b||0),0);
+const red=(n,keep)=>{while(n>9&&!(keep&&(n===11||n===22||n===33)))n=sumD(n);return n};
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const vn=d=>pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+function profile(dob,tet){
+  const b=parse(dob),y=b.getFullYear()-(tet?1:0);
+  const k=((y-4)%60+60)%60,nap=NAP[k>>1];
+  return{b,lp:red(sumD(dob.replace(/-/g,'')),true),canchi:CAN[((y-4)%10+10)%10]+' '+CHI[((y-4)%12+12)%12],lunarY:y,nap:nap[0],m:nap[1]};
+}
+function que(P,dob,day){
+  const r=rng(hash(dob+'|'+ymd(day)));const pick=a=>a[Math.floor(r()*a.length)];
+  const py=red(P.b.getDate()+(P.b.getMonth()+1)+sumD(day.getFullYear()));
+  const pm=red(py+day.getMonth()+1),pd=red(pm+day.getDate());
+  const m=P.m,de=DEL[pd],gen=EL[GEN[m]].d,own=EL[m].d,bad=EL[BEATBY[m]].d;
+  let rel=de===GEN[m]?'sinhNhap':de===m?'tyHoa':de===CHILD[m]?'sinhXuat':de===BEAT[m]?'khacXuat':'khacNhap';
+  let s=REL[rel].s+(pd===red(P.lp)?1:0);s=Math.min(10,s);
+  const a=pick(gen),b2=pick(own),n1=a*10+b2;
+  const t=bad.includes(pd)?pick(gen):pd,pool=[...gen,...own];let u=pick(pool);
+  for(let i=0;i<12&&t*10+u===n1;i++)u=pick(pool);
+  return{py,pm,pd,de,rel,s,n1,n2:t*10+u};
+}
+const descr=n=>{const t=Math.floor(n/10),u=n%10;return t+' ('+DEL[t]+': '+MEAN[t]+') · '+u+' ('+DEL[u]+': '+MEAN[u]+')'};
+
+const W=['CN','T2','T3','T4','T5','T6','T7'];
+let st={dob:'1990-07-20',tet:false,last:''};
+try{Object.assign(st,JSON.parse(localStorage.getItem('quehomnay.v1')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('quehomnay.v1',JSON.stringify(st))}catch(e){}};
+let today=new Date();today.setHours(0,0,0,0);
+let cur=null;
+function calc(){
+  const b=parse(st.dob),tet=b.getMonth()<2&&st.tet,P=profile(st.dob,tet),Q=que(P,st.dob,today);cur={P,Q};
+  $('date').textContent=W[today.getDay()]+', '+vn(today);
+  $('prof').textContent='Sinh '+vn(b)+' · '+P.canchi+' · mệnh '+P.nap+' · số chủ đạo '+P.lp;
+  return{P,Q};
+}
+function show(anim){
+  const {P,Q}=calc();
+  $('stage').style.display='none';$('res').classList.add('on');
+  const fin=()=>{$('n1').textContent=pad(Q.n1);$('n2').textContent=pad(Q.n2);$('bar').style.width=Q.s*10+'%'};
+  if(anim&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const t0=Date.now();const iv=setInterval(()=>{$('n1').textContent=pad(Math.floor(Math.random()*100));$('n2').textContent=pad(Math.floor(Math.random()*100));if(Date.now()-t0>800){clearInterval(iv);fin()}},60)}else fin();
+  $('m1').textContent=descr(Q.n1);$('m2').textContent=descr(Q.n2);
+  $('sc').textContent=Q.s;$('rel').textContent=REL[Q.rel].t;
+  $('relp').textContent='Ngày cá nhân số '+Q.pd+' (hành '+Q.de+'), mệnh bạn '+P.m+'. '+REL[Q.rel].p;
+  $('tip').textContent='Màu hợp: '+EL[GEN[P.m]].c+'. Hướng tốt: '+EL[GEN[P.m]].h+'.';
+  let w='';for(let i=-3;i<=3;i++){const d=new Date(today);d.setDate(d.getDate()+i);const q=que(P,st.dob,d);
+    w+=`<div class="d${i===0?' t':''}">${i===0?'Nay':W[d.getDay()]}<b>${pad(q.n1)}</b><b>${pad(q.n2)}</b><i class="dot" style="width:${q.s*10}%;${i===0?'background:#3b0a0d':''}"></i></div>`}
+  $('week').innerHTML=w;
+}
+function resetStage(){$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake')}
+$('tap').addEventListener('click',()=>{$('tap').classList.add('shake');setTimeout(()=>{st.last=ymd(today);save();show(true)},900)});
+$('again').addEventListener('click',()=>{resetStage();$('tapsub').textContent='Quẻ hôm nay đã định – chạm để xem lại'});
+const openSheet=()=>{$('dob').value=st.dob;$('tet').checked=st.tet;$('tetWrap').style.display=parse(st.dob).getMonth()<2?'flex':'none';$('sheet').classList.toggle('on')};
+$('gear').addEventListener('click',openSheet);
+$('dob').addEventListener('input',()=>{if($('dob').value)$('tetWrap').style.display=parse($('dob').value).getMonth()<2?'flex':'none'});
+$('save').addEventListener('click',()=>{if(!$('dob').value)return;st.dob=$('dob').value;st.tet=$('tet').checked;save();$('sheet').classList.remove('on');calc();if($('res').classList.contains('on'))show(false)});
+$('copy').addEventListener('click',async()=>{if(!cur)return;const t=`Quẻ ${vn(today)}: ${pad(cur.Q.n1)} – ${pad(cur.Q.n2)} · ${cur.Q.s}/10 · ${REL[cur.Q.rel].t}`;
+  let ok=false;try{if(window.AndroidApp)ok=window.AndroidApp.copy(t);else{await navigator.clipboard.writeText(t);ok=true}}catch(e){}
+  $('copy').textContent=ok?'Đã chép':'Không chép được';setTimeout(()=>$('copy').textContent='Sao chép quẻ',1600)});
+function boot(){calc();if(st.last===ymd(today))show(false);else{resetStage();$('tapsub').textContent='Chạm để xóc ống quẻ'}}
+boot();
+// App mở lại sang ngày mới thì tự sang quẻ mới
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')return;const n=new Date();n.setHours(0,0,0,0);if(n.getTime()!==today.getTime()){today=n;boot()}});
+}
+</script>
+</body>
+</html>
