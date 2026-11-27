@@ -33,6 +33,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--rose);outline-o
 .tap .pop{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
 .tap.done .pop{transform:translateY(-34px)}
 @keyframes sh{0%,100%{transform:rotate(0) translateY(0)}12%{transform:rotate(-10deg) translateY(-6px)}25%{transform:rotate(9deg) translateY(2px)}38%{transform:rotate(-8deg) translateY(-5px)}52%{transform:rotate(7deg) translateY(2px)}66%{transform:rotate(-5deg) translateY(-3px)}80%{transform:rotate(3deg)}}
+.btn.shakebtn{min-width:200px;min-height:54px;border:0;border-radius:27px;background:linear-gradient(180deg,#f08aac,var(--rose2));color:#fff;font:800 18px "Be Vietnam Pro",sans-serif;box-shadow:0 8px 18px #c94f7a55}
+.btn.shakebtn:disabled{opacity:.85}
+.tap.shaking .shaker{animation:sh .9s ease-in-out infinite}
 .hint{font:800 20px/1.1 "Noto Serif Display",serif;color:var(--deep);text-align:center}
 .hint small{display:block;font:500 13px "Be Vietnam Pro",sans-serif;color:var(--soft);margin-top:4px}
 .res{display:none;gap:14px}.res.on{display:grid}
@@ -49,10 +52,10 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--rose);outline-o
 .btn{min-height:48px;border-radius:16px;border:1px solid var(--edge);background:#fff;color:var(--deep);font:700 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
 .sheet{display:none}.sheet.on{display:grid;gap:12px}
 label{display:grid;gap:4px;font-size:14px;color:var(--soft)}
-input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--edge);background:#fff;color:var(--ink)}
+input[type=date],input[type=time]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--edge);background:#fff;color:var(--ink)}
 .chk{display:flex;gap:10px;align-items:center;min-height:44px;font-size:15px}.chk input{width:22px;height:22px;accent-color:var(--rose)}
 .fine{font-size:13px;color:var(--soft);text-align:center;margin:0}
-@media(prefers-reduced-motion:reduce){.tap.shake .shaker{animation:none}.meter i,.tap .pop{transition:none}}
+@media(prefers-reduced-motion:reduce){.tap.shake .shaker,.tap.shaking .shaker{animation:none}.meter i,.tap .pop{transition:none}}
 </style>
 </head>
 <body>
@@ -64,11 +67,12 @@ input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;b
 
   <section class="sheet card" id="sheet">
     <label>Ngày sinh dương lịch<input type="date" id="dob"></label>
+    <label>Giờ sinh<input type="time" id="tob"></label>
     <div class="chk" id="tetWrap"><input type="checkbox" id="tet"><span>Sinh trước Tết Nguyên Đán năm đó</span></div>
     <button class="btn" id="save" style="background:var(--rose);color:#fff;border:0">Lưu</button>
   </section>
 
-  <figure class="hero"><img src="con-gai.jpg" alt="Con gái đang gieo quẻ"><figcaption id="cap">Bé gieo quẻ hôm nay<small>Hai tay lắc ống quẻ thật đều nhé</small></figcaption></figure>
+  <figure class="hero"><img src="con-gai.jpg" alt="Con gái đang gieo quẻ"><figcaption id="cap">Quẻ của Bố hôm nay<small>Chúc Bố may mắn!</small></figcaption></figure>
 
   <section class="stage" id="stage">
     <button class="tap" id="tap" aria-label="Lắc ống quẻ">
@@ -103,7 +107,8 @@ input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;b
   </g>
  </g>
 </svg></button>
-    <div class="hint">Gieo quẻ<small id="tapsub">Chạm để bé lắc ống quẻ</small></div>
+    <button class="btn shakebtn" id="shakeBtn">Lắc quẻ</button>
+    <div class="hint"><small id="tapsub">Bấm "Lắc quẻ", bé lắc 5 giây rồi ra quẻ</small></div>
   </section>
 
   <section class="res" id="res">
@@ -152,13 +157,14 @@ const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
 function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
 function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 
+const gioChi=t=>{const [h,m]=t.split(':').map(Number);return CHI[Math.floor(((h+1)%24)/2)]};
 function profile(dob,tet){
   const b=parse(dob),y=b.getFullYear()-(tet?1:0);
   const k=((y-4)%60+60)%60,nap=NAP[k>>1];
   return{b,lp:red(sumD(dob.replace(/-/g,'')),true),canchi:CAN[((y-4)%10+10)%10]+' '+CHI[((y-4)%12+12)%12],lunarY:y,nap:nap[0],m:nap[1]};
 }
 function que(P,dob,day){
-  const r=rng(hash(dob+'|'+ymd(day)));const pick=a=>a[Math.floor(r()*a.length)];
+  const r=rng(hash(dob+'|'+st.tob+'|'+ymd(day)));const pick=a=>a[Math.floor(r()*a.length)];
   const py=red(P.b.getDate()+(P.b.getMonth()+1)+sumD(day.getFullYear()));
   const pm=red(py+day.getMonth()+1),pd=red(pm+day.getDate());
   const m=P.m,de=DEL[pd],gen=EL[GEN[m]].d,own=EL[m].d,bad=EL[BEATBY[m]].d;
@@ -172,15 +178,16 @@ function que(P,dob,day){
 const descr=n=>{const t=Math.floor(n/10),u=n%10;return t+' ('+DEL[t]+': '+MEAN[t]+') · '+u+' ('+DEL[u]+': '+MEAN[u]+')'};
 
 const W=['CN','T2','T3','T4','T5','T6','T7'];
-let st={dob:'1990-07-20',tet:false,last:''};
+let st={dob:'1990-07-20',tob:'17:30',tet:false,last:''};
 try{Object.assign(st,JSON.parse(localStorage.getItem('quehomnay.v1')||'{}'))}catch(e){}
+if(!st.tob)st.tob='17:30';
 const save=()=>{try{localStorage.setItem('quehomnay.v1',JSON.stringify(st))}catch(e){}};
 let today=new Date();today.setHours(0,0,0,0);
 let cur=null;
 function calc(){
   const b=parse(st.dob),tet=b.getMonth()<2&&st.tet,P=profile(st.dob,tet),Q=que(P,st.dob,today);cur={P,Q};
   $('date').textContent=W[today.getDay()]+', '+vn(today);
-  $('prof').textContent='Sinh '+vn(b)+' · '+P.canchi+' · mệnh '+P.nap+' · số chủ đạo '+P.lp;
+  $('prof').textContent='Sinh '+st.tob.replace(':','h')+' (giờ '+gioChi(st.tob)+') ngày '+vn(b)+' · '+P.canchi+' · mệnh '+P.nap+' · số chủ đạo '+P.lp;
   return{P,Q};
 }
 function show(anim){
@@ -193,19 +200,23 @@ function show(anim){
   $('relp').textContent='Ngày cá nhân số '+Q.pd+' (hành '+Q.de+'), mệnh bạn '+P.m+'. '+REL[Q.rel].p;
   $('tip').textContent='Màu hợp: '+EL[GEN[P.m]].c+'. Hướng tốt: '+EL[GEN[P.m]].h+'.';
   document.querySelector('.app').classList.add('done');
-  $('cap').firstChild.textContent='Quẻ của bé hôm nay';
 }
-function resetStage(){document.querySelector('.app').classList.remove('done');$('cap').firstChild.textContent='Bé gieo quẻ hôm nay';$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake','done')}
-$('tap').addEventListener('click',()=>{const t=$('tap');t.classList.remove('done');t.classList.add('shake');setTimeout(()=>{t.classList.add('done')},900);setTimeout(()=>{st.last=ymd(today);save();show(true)},1500)});
-$('again').addEventListener('click',()=>{resetStage();$('tapsub').textContent='Quẻ hôm nay đã định – chạm để xem lại'});
-const openSheet=()=>{$('dob').value=st.dob;$('tet').checked=st.tet;$('tetWrap').style.display=parse(st.dob).getMonth()<2?'flex':'none';$('sheet').classList.toggle('on')};
+function resetStage(){document.querySelector('.app').classList.remove('done');$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake','shaking','done')}
+let busy=false;
+function doShake(){if(busy)return;busy=true;const t=$('tap'),b=$('shakeBtn');t.classList.remove('done','shake');t.classList.add('shaking');
+  let n=5;b.disabled=true;b.textContent='Đang lắc… '+n;
+  const iv=setInterval(()=>{n--;if(n>0)b.textContent='Đang lắc… '+n;else{clearInterval(iv);t.classList.remove('shaking');t.classList.add('done');b.textContent='Ra quẻ!';
+    setTimeout(()=>{busy=false;b.disabled=false;b.textContent='Lắc quẻ';st.last=ymd(today);save();show(false)},700)}},1000)}
+$('shakeBtn').addEventListener('click',doShake);$('tap').addEventListener('click',doShake);
+$('again').addEventListener('click',()=>{resetStage();$('tapsub').textContent='Quẻ hôm nay đã định – lắc lại vẫn ra quẻ này'});
+const openSheet=()=>{$('dob').value=st.dob;$('tob').value=st.tob;$('tet').checked=st.tet;$('tetWrap').style.display=parse(st.dob).getMonth()<2?'flex':'none';$('sheet').classList.toggle('on')};
 $('gear').addEventListener('click',openSheet);
 $('dob').addEventListener('input',()=>{if($('dob').value)$('tetWrap').style.display=parse($('dob').value).getMonth()<2?'flex':'none'});
-$('save').addEventListener('click',()=>{if(!$('dob').value)return;st.dob=$('dob').value;st.tet=$('tet').checked;save();$('sheet').classList.remove('on');calc();if($('res').classList.contains('on'))show(false)});
+$('save').addEventListener('click',()=>{if(!$('dob').value)return;st.dob=$('dob').value;st.tob=$('tob').value||'17:30';st.tet=$('tet').checked;save();$('sheet').classList.remove('on');calc();if($('res').classList.contains('on'))show(false)});
 $('copy').addEventListener('click',async()=>{if(!cur)return;const t=`Quẻ ${vn(today)}: ${pad(cur.Q.n1)} – ${pad(cur.Q.n2)} · ${cur.Q.s}/10 · ${REL[cur.Q.rel].t}`;
   let ok=false;try{if(window.AndroidApp)ok=window.AndroidApp.copy(t);else{await navigator.clipboard.writeText(t);ok=true}}catch(e){}
   $('copy').textContent=ok?'Đã chép':'Không chép được';setTimeout(()=>$('copy').textContent='Sao chép quẻ',1600)});
-function boot(){calc();if(st.last===ymd(today))show(false);else{resetStage();$('tapsub').textContent='Chạm để bé lắc ống quẻ'}}
+function boot(){calc();if(st.last===ymd(today))show(false);else resetStage()}
 boot();
 // App mở lại sang ngày mới thì tự sang quẻ mới
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')return;const n=new Date();n.setHours(0,0,0,0);if(n.getTime()!==today.getTime()){today=n;boot()}});
