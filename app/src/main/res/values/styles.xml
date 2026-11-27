@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lac">#6E1016</color>
+    <color name="lac">#F7B6CB</color>
+    <color name="nen">#FFF0F4</color>
     <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/lac</item>
-        <item name="android:statusBarColor">@color/lac</item>
+        <item name="android:windowBackground">@color/nen</item>
+        <item name="android:statusBarColor">@color/nen</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

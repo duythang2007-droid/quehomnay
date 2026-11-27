@@ -3,59 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6e1016">
+<meta name="theme-color" content="#ffd3e1">
 <title>Quẻ hôm nay</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Noto+Serif+Display:wght@700;800&display=swap&subset=vietnamese" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--lac:#6e1016;--deep:#3d070a;--mid:#5a0c11;--gold:#e0ab45;--cream:#fbefe6;--soft:#e9bfb2;--edge:#a5464b}
+:root{color-scheme:light;--bg:#fff0f4;--bg2:#ffdce7;--card:#ffffffcc;--rose:#e46f96;--rose2:#c94f7a;--deep:#7a2e4a;--ink:#4a2333;--soft:#9a6278;--edge:#f6bfd0;--gold:#d9a441}
 *{box-sizing:border-box;min-width:0}
-html,body{margin:0;min-height:100%;background:var(--lac)}
-body{color:var(--cream);font:16px/1.5 "Be Vietnam Pro",system-ui,sans-serif;background:radial-gradient(120% 70% at 50% -10%,#a8262d 0,var(--lac) 55%,#4a0a0e 100%) fixed;overflow-x:clip;
+html,body{margin:0;min-height:100vh;background:var(--bg)}
+body{color:var(--ink);font:16px/1.5 "Be Vietnam Pro",system-ui,sans-serif;background:radial-gradient(120% 60% at 50% -10%,#ffd3e1 0,var(--bg) 60%,#ffe9f0 100%);overflow-x:clip;
   padding:max(18px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
 .app{max-width:460px;margin:0 auto;display:grid;gap:18px}
 header{display:flex;justify-content:space-between;align-items:center;gap:10px}
-header h1{font:800 22px/1.1 "Noto Serif Display",Georgia,serif;margin:0}
+header h1{font:800 22px/1.1 "Noto Serif Display",Georgia,serif;margin:0;color:var(--deep)}
 header p{margin:2px 0 0;color:var(--soft);font-size:14px}
-.gear{min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--edge);background:var(--mid);color:var(--cream);font-size:20px;cursor:pointer}
-button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.hero{position:relative;margin:0 auto;width:min(100%,360px);aspect-ratio:4/4.4;border-radius:180px 180px 26px 26px;overflow:hidden;
-  border:3px solid var(--gold);box-shadow:0 0 0 6px #00000022,0 18px 40px #0007}
-.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}
-.hero figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;text-align:center;
-  background:linear-gradient(transparent,#3d070aee);font:800 20px/1.2 "Noto Serif Display",serif}
-.hero figcaption small{display:block;font:500 13px "Be Vietnam Pro",sans-serif;color:var(--soft)}
-.stage{display:grid;place-items:center;margin-top:-62px;position:relative}
-.hero figcaption{padding-bottom:72px}.app.done .hero{width:min(100%,280px)}.app.done .hero figcaption{padding-bottom:12px}
-.tap{width:min(52vw,190px);aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;color:#3b0a0d;
-  background:radial-gradient(circle at 35% 30%,#f7d58a 0,var(--gold) 38%,#a8741f 100%);
-  box-shadow:0 0 0 10px #ffffff10,0 0 0 22px #00000018,0 18px 40px #0007,inset 0 -8px 18px #7a4e0f88,inset 0 6px 10px #fff6;
-  display:grid;place-content:center;gap:4px;padding:0 18px;font:800 24px/1.1 "Noto Serif Display",serif}
-.tap small{font:500 12px "Be Vietnam Pro",sans-serif}
-.tap.shake{animation:sh .9s ease-in-out}
-@keyframes sh{0%,100%{transform:rotate(0)}15%{transform:rotate(-9deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-7deg)}60%{transform:rotate(6deg)}75%{transform:rotate(-3deg)}}
+.gear{min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--edge);background:#fff;color:var(--rose2);font-size:20px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.hero{position:relative;margin:0 auto;width:min(100%,340px);aspect-ratio:4/4.5;border-radius:170px 170px 28px 28px;overflow:hidden;
+  border:4px solid #fff;box-shadow:0 0 0 3px var(--edge),0 16px 36px #e46f9640}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.hero figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 58px;text-align:center;color:#fff;
+  background:linear-gradient(transparent,#7a2e4acc);font:800 20px/1.2 "Noto Serif Display",serif;text-shadow:0 1px 4px #0005}
+.hero figcaption small{display:block;font:500 13px "Be Vietnam Pro",sans-serif;opacity:.9}
+.app.done .hero{width:min(100%,260px)}.app.done .hero figcaption{padding-bottom:12px}
+.stage{display:grid;justify-items:center;margin-top:-74px;position:relative;gap:6px}
+.tap{background:none;border:0;padding:0;cursor:pointer;width:210px;-webkit-tap-highlight-color:transparent}
+.tap svg{width:100%;height:auto;display:block;overflow:visible;filter:drop-shadow(0 10px 14px #7a2e4a40)}
+.tap .shaker{transform-origin:105px 230px}
+.tap.shake .shaker{animation:sh .9s ease-in-out}
+.tap .pop{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.tap.done .pop{transform:translateY(-34px)}
+@keyframes sh{0%,100%{transform:rotate(0) translateY(0)}12%{transform:rotate(-10deg) translateY(-6px)}25%{transform:rotate(9deg) translateY(2px)}38%{transform:rotate(-8deg) translateY(-5px)}52%{transform:rotate(7deg) translateY(2px)}66%{transform:rotate(-5deg) translateY(-3px)}80%{transform:rotate(3deg)}}
+.hint{font:800 20px/1.1 "Noto Serif Display",serif;color:var(--deep);text-align:center}
+.hint small{display:block;font:500 13px "Be Vietnam Pro",sans-serif;color:var(--soft);margin-top:4px}
 .res{display:none;gap:14px}.res.on{display:grid}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.tile{background:linear-gradient(160deg,var(--deep),var(--mid));border:1px solid var(--edge);border-radius:20px;padding:14px 14px 16px;text-align:center;box-shadow:inset 0 1px 0 #ffffff22,0 10px 24px #0005}
+.tile{background:#fff;border:1px solid var(--edge);border-radius:22px;padding:14px 12px 16px;text-align:center;box-shadow:0 10px 24px #e46f9626}
 .tile small{color:var(--soft);font-size:14px}
-.num{font:800 clamp(72px,24vw,108px)/1 "Noto Serif Display",serif;color:var(--gold);text-shadow:0 2px 0 #2a0507;font-variant-numeric:tabular-nums}
+.num{font:800 clamp(72px,24vw,104px)/1 "Noto Serif Display",serif;color:var(--rose2);font-variant-numeric:tabular-nums}
 .tile p{margin:6px 0 0;font-size:13px;color:var(--soft)}
-.card{background:#00000028;border:1px solid var(--edge);border-radius:18px;padding:16px}
-.sc{display:flex;align-items:baseline;gap:8px}.sc b{font:800 40px/1 "Noto Serif Display",serif}
-.meter{height:10px;border-radius:6px;background:var(--deep);overflow:hidden;margin:10px 0}.meter i{display:block;height:100%;width:0;background:var(--gold);transition:width .7s}
-.rel{font-weight:700;color:var(--gold)}.card p{margin:6px 0 0;font-size:15px}
-.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;text-align:center}
-.d{border-radius:12px;padding:8px 2px;background:#00000022;font-size:13px;color:var(--soft)}
-.d b{display:block;font-size:15px;color:var(--cream);font-variant-numeric:tabular-nums}
-.d.t{background:var(--gold);color:#3b0a0d}.d.t b{color:#3b0a0d}
-.dot{display:block;height:4px;border-radius:2px;margin:6px auto 0;background:var(--gold)}
+.card{background:var(--card);border:1px solid var(--edge);border-radius:20px;padding:16px}
+.sc{display:flex;align-items:baseline;gap:8px;color:var(--deep)}.sc b{font:800 40px/1 "Noto Serif Display",serif}
+.meter{height:10px;border-radius:6px;background:var(--bg2);overflow:hidden;margin:10px 0}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f5a3bd,var(--rose2));transition:width .7s}
+.rel{font-weight:700;color:var(--rose2)}.card p{margin:6px 0 0;font-size:15px}
 .row{display:flex;gap:10px}.row button{flex:1}
-.btn{min-height:48px;border-radius:14px;border:1px solid var(--edge);background:var(--mid);color:var(--cream);font:700 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
+.btn{min-height:48px;border-radius:16px;border:1px solid var(--edge);background:#fff;color:var(--deep);font:700 15px "Be Vietnam Pro",sans-serif;cursor:pointer}
 .sheet{display:none}.sheet.on{display:grid;gap:12px}
 label{display:grid;gap:4px;font-size:14px;color:var(--soft)}
-input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--edge);background:var(--deep);color:#fff}
-.chk{display:flex;gap:10px;align-items:center;min-height:44px;font-size:15px;color:var(--cream)}.chk input{width:22px;height:22px;accent-color:var(--gold)}
+input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;border-radius:12px;border:1px solid var(--edge);background:#fff;color:var(--ink)}
+.chk{display:flex;gap:10px;align-items:center;min-height:44px;font-size:15px}.chk input{width:22px;height:22px;accent-color:var(--rose)}
 .fine{font-size:13px;color:var(--soft);text-align:center;margin:0}
-@media(prefers-reduced-motion:reduce){.tap.shake{animation:none}.meter i{transition:none}}
+@media(prefers-reduced-motion:reduce){.tap.shake .shaker{animation:none}.meter i,.tap .pop{transition:none}}
 </style>
 </head>
 <body>
@@ -68,13 +65,45 @@ input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;b
   <section class="sheet card" id="sheet">
     <label>Ngày sinh dương lịch<input type="date" id="dob"></label>
     <div class="chk" id="tetWrap"><input type="checkbox" id="tet"><span>Sinh trước Tết Nguyên Đán năm đó</span></div>
-    <button class="btn" id="save" style="background:var(--gold);color:#3b0a0d;border:0">Lưu</button>
+    <button class="btn" id="save" style="background:var(--rose);color:#fff;border:0">Lưu</button>
   </section>
 
-  <figure class="hero"><img src="con-gai.jpg" alt="Con gái đang gieo quẻ"><figcaption id="cap">Bé gieo quẻ hôm nay<small>Mỗi ngày một quẻ may mắn</small></figcaption></figure>
+  <figure class="hero"><img src="con-gai.jpg" alt="Con gái đang gieo quẻ"><figcaption id="cap">Bé gieo quẻ hôm nay<small>Hai tay lắc ống quẻ thật đều nhé</small></figcaption></figure>
 
   <section class="stage" id="stage">
-    <button class="tap" id="tap">Gieo quẻ<small id="tapsub">Chạm để xóc ống quẻ</small></button>
+    <button class="tap" id="tap" aria-label="Lắc ống quẻ">
+<svg viewBox="0 0 210 250" aria-hidden="true">
+ <g class="shaker">
+  <g stroke="#b98a4a" stroke-width="1.2">
+   <rect x="72" y="28" width="9" height="80" rx="4" fill="#efcf8f" transform="rotate(-9 76 108)"/>
+   <rect x="88" y="16" width="9" height="90" rx="4" fill="#f3d79c" transform="rotate(-4 92 106)"/>
+   <rect x="113" y="18" width="9" height="90" rx="4" fill="#f3d79c" transform="rotate(5 117 108)"/>
+   <rect x="127" y="30" width="9" height="80" rx="4" fill="#efcf8f" transform="rotate(10 131 110)"/>
+  </g>
+  <g class="pop"><rect x="100" y="4" width="10" height="104" rx="4" fill="#f7dfa8" stroke="#b98a4a" stroke-width="1.2"/><rect x="100" y="4" width="10" height="18" rx="4" fill="#e46f96"/></g>
+  <path d="M58 96h94l-8 132a10 10 0 0 1-10 9H76a10 10 0 0 1-10-9z" fill="#e46f96"/>
+  <path d="M58 96h94l-1 14H59z" fill="#c94f7a"/>
+  <ellipse cx="105" cy="96" rx="47" ry="10" fill="#f59ab7" stroke="#c94f7a" stroke-width="2"/>
+  <ellipse cx="105" cy="96" rx="38" ry="6" fill="#7a2e4a"/>
+  <rect x="61" y="128" width="88" height="7" fill="#d9a441"/><rect x="64" y="205" width="82" height="7" fill="#d9a441"/>
+  <circle cx="105" cy="170" r="19" fill="#fff3d6" stroke="#d9a441" stroke-width="3"/>
+  <text x="105" y="178" text-anchor="middle" font-size="22" font-weight="800" fill="#c94f7a" font-family="Noto Serif Display,serif">福</text>
+  <path d="M74 112c4 30 4 70 2 108" stroke="#fff" stroke-opacity=".35" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <g>
+   <path d="M8 250c4-40 20-70 46-80l14 22c-14 10-22 34-24 58z" fill="#f6efe3" stroke="#e2d5c0" stroke-width="2"/>
+   <circle cx="62" cy="180" r="17" fill="#f6efe3" stroke="#e2d5c0" stroke-width="2"/>
+   <path d="M60 158c10-4 20 2 18 14l-2 30c-1 10-14 12-20 4l-4-30c-2-10 0-16 8-18z" fill="#ffd9c4" stroke="#e8b39b" stroke-width="2"/>
+   <path d="M67 166h9M66 178h10M66 190h9" stroke="#e8b39b" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g>
+   <path d="M202 250c-4-40-20-70-46-80l-14 22c14 10 22 34 24 58z" fill="#f6efe3" stroke="#e2d5c0" stroke-width="2"/>
+   <circle cx="148" cy="180" r="17" fill="#f6efe3" stroke="#e2d5c0" stroke-width="2"/>
+   <path d="M150 158c-10-4-20 2-18 14l2 30c1 10 14 12 20 4l4-30c2-10 0-16-8-18z" fill="#ffd9c4" stroke="#e8b39b" stroke-width="2"/>
+   <path d="M143 166h-9M144 178h-10M144 190h-9" stroke="#e8b39b" stroke-width="2" stroke-linecap="round"/>
+  </g>
+ </g>
+</svg></button>
+    <div class="hint">Gieo quẻ<small id="tapsub">Chạm để bé lắc ống quẻ</small></div>
   </section>
 
   <section class="res" id="res">
@@ -166,8 +195,8 @@ function show(anim){
   document.querySelector('.app').classList.add('done');
   $('cap').firstChild.textContent='Quẻ của bé hôm nay';
 }
-function resetStage(){document.querySelector('.app').classList.remove('done');$('cap').firstChild.textContent='Bé gieo quẻ hôm nay';$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake')}
-$('tap').addEventListener('click',()=>{$('tap').classList.add('shake');setTimeout(()=>{st.last=ymd(today);save();show(true)},900)});
+function resetStage(){document.querySelector('.app').classList.remove('done');$('cap').firstChild.textContent='Bé gieo quẻ hôm nay';$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake','done')}
+$('tap').addEventListener('click',()=>{const t=$('tap');t.classList.remove('done');t.classList.add('shake');setTimeout(()=>{t.classList.add('done')},900);setTimeout(()=>{st.last=ymd(today);save();show(true)},1500)});
 $('again').addEventListener('click',()=>{resetStage();$('tapsub').textContent='Quẻ hôm nay đã định – chạm để xem lại'});
 const openSheet=()=>{$('dob').value=st.dob;$('tet').checked=st.tet;$('tetWrap').style.display=parse(st.dob).getMonth()<2?'flex':'none';$('sheet').classList.toggle('on')};
 $('gear').addEventListener('click',openSheet);
@@ -176,7 +205,7 @@ $('save').addEventListener('click',()=>{if(!$('dob').value)return;st.dob=$('dob'
 $('copy').addEventListener('click',async()=>{if(!cur)return;const t=`Quẻ ${vn(today)}: ${pad(cur.Q.n1)} – ${pad(cur.Q.n2)} · ${cur.Q.s}/10 · ${REL[cur.Q.rel].t}`;
   let ok=false;try{if(window.AndroidApp)ok=window.AndroidApp.copy(t);else{await navigator.clipboard.writeText(t);ok=true}}catch(e){}
   $('copy').textContent=ok?'Đã chép':'Không chép được';setTimeout(()=>$('copy').textContent='Sao chép quẻ',1600)});
-function boot(){calc();if(st.last===ymd(today))show(false);else{resetStage();$('tapsub').textContent='Chạm để xóc ống quẻ'}}
+function boot(){calc();if(st.last===ymd(today))show(false);else{resetStage();$('tapsub').textContent='Chạm để bé lắc ống quẻ'}}
 boot();
 // App mở lại sang ngày mới thì tự sang quẻ mới
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')return;const n=new Date();n.setHours(0,0,0,0);if(n.getTime()!==today.getTime()){today=n;boot()}});
