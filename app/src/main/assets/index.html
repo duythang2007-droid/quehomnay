@@ -18,12 +18,19 @@ header h1{font:800 22px/1.1 "Noto Serif Display",Georgia,serif;margin:0}
 header p{margin:2px 0 0;color:var(--soft);font-size:14px}
 .gear{min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--edge);background:var(--mid);color:var(--cream);font-size:20px;cursor:pointer}
 button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.stage{display:grid;place-items:center;min-height:300px}
-.tap{width:min(72vw,260px);aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;color:#3b0a0d;
+.hero{position:relative;margin:0 auto;width:min(100%,360px);aspect-ratio:4/4.4;border-radius:180px 180px 26px 26px;overflow:hidden;
+  border:3px solid var(--gold);box-shadow:0 0 0 6px #00000022,0 18px 40px #0007}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}
+.hero figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;text-align:center;
+  background:linear-gradient(transparent,#3d070aee);font:800 20px/1.2 "Noto Serif Display",serif}
+.hero figcaption small{display:block;font:500 13px "Be Vietnam Pro",sans-serif;color:var(--soft)}
+.stage{display:grid;place-items:center;margin-top:-62px;position:relative}
+.hero figcaption{padding-bottom:72px}.app.done .hero{width:min(100%,280px)}.app.done .hero figcaption{padding-bottom:12px}
+.tap{width:min(52vw,190px);aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;color:#3b0a0d;
   background:radial-gradient(circle at 35% 30%,#f7d58a 0,var(--gold) 38%,#a8741f 100%);
   box-shadow:0 0 0 10px #ffffff10,0 0 0 22px #00000018,0 18px 40px #0007,inset 0 -8px 18px #7a4e0f88,inset 0 6px 10px #fff6;
-  display:grid;place-content:center;gap:4px;font:800 26px/1.1 "Noto Serif Display",serif}
-.tap small{font:500 14px "Be Vietnam Pro",sans-serif}
+  display:grid;place-content:center;gap:4px;padding:0 18px;font:800 24px/1.1 "Noto Serif Display",serif}
+.tap small{font:500 12px "Be Vietnam Pro",sans-serif}
 .tap.shake{animation:sh .9s ease-in-out}
 @keyframes sh{0%,100%{transform:rotate(0)}15%{transform:rotate(-9deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-7deg)}60%{transform:rotate(6deg)}75%{transform:rotate(-3deg)}}
 .res{display:none;gap:14px}.res.on{display:grid}
@@ -64,6 +71,8 @@ input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;b
     <button class="btn" id="save" style="background:var(--gold);color:#3b0a0d;border:0">Lưu</button>
   </section>
 
+  <figure class="hero"><img src="con-gai.jpg" alt="Con gái đang gieo quẻ"><figcaption id="cap">Bé gieo quẻ hôm nay<small>Mỗi ngày một quẻ may mắn</small></figcaption></figure>
+
   <section class="stage" id="stage">
     <button class="tap" id="tap">Gieo quẻ<small id="tapsub">Chạm để xóc ống quẻ</small></button>
   </section>
@@ -80,7 +89,6 @@ input[type=date]{font:inherit;font-size:16px;min-height:48px;padding:10px 12px;b
       <p id="relp"></p>
       <p id="tip" style="color:var(--soft)"></p>
     </div>
-    <div class="week" id="week" aria-label="Quẻ 7 ngày"></div>
     <div class="row"><button class="btn" id="copy">Sao chép quẻ</button><button class="btn" id="again">Xem lại nghi thức</button></div>
   </section>
 
@@ -155,11 +163,10 @@ function show(anim){
   $('sc').textContent=Q.s;$('rel').textContent=REL[Q.rel].t;
   $('relp').textContent='Ngày cá nhân số '+Q.pd+' (hành '+Q.de+'), mệnh bạn '+P.m+'. '+REL[Q.rel].p;
   $('tip').textContent='Màu hợp: '+EL[GEN[P.m]].c+'. Hướng tốt: '+EL[GEN[P.m]].h+'.';
-  let w='';for(let i=-3;i<=3;i++){const d=new Date(today);d.setDate(d.getDate()+i);const q=que(P,st.dob,d);
-    w+=`<div class="d${i===0?' t':''}">${i===0?'Nay':W[d.getDay()]}<b>${pad(q.n1)}</b><b>${pad(q.n2)}</b><i class="dot" style="width:${q.s*10}%;${i===0?'background:#3b0a0d':''}"></i></div>`}
-  $('week').innerHTML=w;
+  document.querySelector('.app').classList.add('done');
+  $('cap').firstChild.textContent='Quẻ của bé hôm nay';
 }
-function resetStage(){$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake')}
+function resetStage(){document.querySelector('.app').classList.remove('done');$('cap').firstChild.textContent='Bé gieo quẻ hôm nay';$('res').classList.remove('on');$('stage').style.display='grid';$('tap').classList.remove('shake')}
 $('tap').addEventListener('click',()=>{$('tap').classList.add('shake');setTimeout(()=>{st.last=ymd(today);save();show(true)},900)});
 $('again').addEventListener('click',()=>{resetStage();$('tapsub').textContent='Quẻ hôm nay đã định – chạm để xem lại'});
 const openSheet=()=>{$('dob').value=st.dob;$('tet').checked=st.tet;$('tetWrap').style.display=parse(st.dob).getMonth()<2?'flex':'none';$('sheet').classList.toggle('on')};
